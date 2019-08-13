@@ -58,8 +58,8 @@ echo '<br>';
 
 $table = new html_table();
 $table->head = array(
-    (empty($option->booking->lblacceptingfrom) ? get_string('otherbookingoptions', 'booking') : $option->booking->lblacceptingfrom),
-    (empty($option->booking->lblnumofusers) ? get_string('otherbookingnumber', 'booking') : $option->booking->lblnumofusers));
+    (empty($option->booking->settings->lblacceptingfrom) ? get_string('otherbookingoptions', 'booking') : $option->booking->settings->lblacceptingfrom),
+    (empty($option->booking->settings->lblnumofusers) ? get_string('otherbookingnumber', 'booking') : $option->booking->settings->lblnumofusers));
 
 $rules = $DB->get_records_sql(
         "SELECT bo.id, bo.otheroptionid, bo.userslimit, b.text

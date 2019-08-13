@@ -38,7 +38,7 @@ class backup_booking_activity_structure_step extends backup_activity_structure_s
         $booking = new backup_nested_element('booking', array('id'),
                 array('course', 'name', 'intro', 'introformat', 'bookingmanager', 'sendmail',
                     'copymail', 'allowupdate', 'bookingpolicy', 'bookingpolicyformat', 'timeopen',
-                    'timeclose', 'limitanswers', 'maxanswers', 'maxoverbooking', 'timemodified',
+                    'timeclose', 'timemodified',
                     'autoenrol', 'bookedtext', 'waitingtext', 'statuschangetext', 'deletedtext',
                     'maxperuser', 'sendmailtobooker', 'duration', 'points', 'organizatorname',
                     'pollurl', 'addtogroup', 'categoryid', 'pollurltext', 'eventtype',
@@ -50,18 +50,18 @@ class backup_booking_activity_structure_step extends backup_activity_structure_s
                     'paginationnum', 'daystonotify', 'daystonotify2', 'notifyemail', 'assessed',
                     'assesstimestart', 'assesstimefinish', 'scale', 'enablepresence',
                     'responsesfields', 'reportfields', 'beforebookedtext', 'beforecompletedtext',
-                    'aftercompletedtext', 'comments'));
+                    'aftercompletedtext', 'comments', 'allowupdatedays'));
 
         $options = new backup_nested_element('options');
         $option = new backup_nested_element('option', array('id'),
                 array('text', 'maxanswers', 'maxoverbooking', 'bookingclosingtime', 'courseid',
-                    'coursestarttime', 'courseendtime', 'description', 'descriptionformat',
+                    'coursestarttime', 'courseendtime', 'enrolmentstatus', 'description', 'descriptionformat',
                     'limitanswers', 'timemodified', 'addtocalendar', 'calendarid', 'pollurl',
                     'groupid', 'sent', 'sent2', 'location', 'institution', 'address',
                     'pollurlteachers', 'howmanyusers', 'pollsend', 'removeafterminutes',
                     'notificationtext', 'notificationtextformat', 'disablebookingusers',
                     'beforebookedtext', 'beforecompletedtext',
-                    'aftercompletedtext'));
+                    'aftercompletedtext', 'shorturl', 'duration'));
 
         $answers = new backup_nested_element('answers');
         $answer = new backup_nested_element('answer', array('id'),
@@ -127,11 +127,7 @@ class backup_booking_activity_structure_step extends backup_activity_structure_s
         // Define sources.
         $booking->set_source_table('booking', array('id' => backup::VAR_ACTIVITYID));
 
-        $option->set_source_sql(
-                '
-            SELECT *
-              FROM {booking_options}
-             WHERE bookingid = ?', array(backup::VAR_PARENTID));
+        $option->set_source_sql('SELECT * FROM {booking_options} WHERE bookingid = ?', array(backup::VAR_PARENTID));
 
         $category->set_source_table('booking_category', array('course' => '../../course'));
         $tag->set_source_table('booking_tags', array('courseid' => '../../course'));
@@ -140,11 +136,10 @@ class backup_booking_activity_structure_step extends backup_activity_structure_s
         $optiondate->set_source_table('booking_optiondates', array('bookingid' => backup::VAR_PARENTID));
         $customfield->set_source_table('booking_customfields', array('bookingid' => backup::VAR_PARENTID));
 
-            // All the rest of elements only happen if we are including user info.
+        // All the rest of elements only happen if we are including user info.
         if ($userinfo) {
             $answer->set_source_table('booking_answers', array('bookingid' => backup::VAR_PARENTID));
-            $teacher->set_source_table('booking_teachers',
-                    array('bookingid' => backup::VAR_PARENTID));
+            $teacher->set_source_table('booking_teachers', array('bookingid' => backup::VAR_PARENTID));
         }
 
         // Define id annotations.

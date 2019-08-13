@@ -53,7 +53,7 @@ if ($ADMIN->fulltree) {
                     get_string('icalcancel', 'mod_booking'),
                     get_string('icalcanceldesc', 'mod_booking'), 1));
     $options = array(1 => get_string('courseurl', 'hub'), 2 => get_string('location', 'mod_booking'),
-        3 => get_string('institution'), 4 => get_string('address'));
+        3 => get_string('institution', 'mod_booking'), 4 => get_string('address'));
     $settings->add(
             new admin_setting_configselect('booking/icalfieldlocation',
                     get_string('icalfieldlocation', 'mod_booking'),
@@ -130,6 +130,23 @@ if ($ADMIN->fulltree) {
         $setting = new admin_setting_configtext($name, $visiblename, $description, '');
         $settings->add($setting);
     }
+
+    $settings->add(
+        new admin_setting_heading('optiontemplatessettings_heading',
+                get_string('optiontemplatessettings', 'mod_booking'), ''));
+
+        $alltemplates = array('' => get_string('dontuse', 'booking'));
+        $alloptiontemplates = $DB->get_records('booking_options', array('bookingid' => 0), '', $fields = 'id, text', 0, 0);
+
+    foreach ($alloptiontemplates as $key => $value) {
+            $alltemplates[$value->id] = $value->text;
+    }
+
+    $settings->add(
+             new admin_setting_configselect('booking/defaulttemplate',
+                        get_string('defaulttemplate', 'mod_booking'),
+                        get_string('defaulttemplatedesc', 'mod_booking'),
+                        1, $alltemplates));
 }
 $ADMIN->add('modbookingfolder',
         new admin_externalpage('modbookingcustomfield',

@@ -222,7 +222,7 @@ class generator {
             $this->cfgcustfields = explode(',', $cfgcustfields);
         }
 
-        $this->allfields = explode(',', $this->bookingdata->booking->signinsheetfields);
+        $this->allfields = explode(',', $this->bookingdata->booking->settings->signinsheetfields);
         if (get_config('booking', 'numberrows') == 1) {
             $this->showrownumbers = true;
             $this->rownumber = 0;
@@ -252,11 +252,11 @@ class generator {
         $groupparams = array();
         $addsqlwhere = '';
 
-        if (groups_get_activity_groupmode($this->bookingdata->cm) == SEPARATEGROUPS and
+        if (groups_get_activity_groupmode($this->bookingdata->booking->cm) == SEPARATEGROUPS and
                  !has_capability('moodle/site:accessallgroups',
-                        \context_course::instance($this->bookingdata->course->id))) {
+                        \context_course::instance($this->bookingdata->booking->course->id))) {
             list($groupsql, $groupparams) = \mod_booking\booking::booking_get_groupmembers_sql(
-                    $this->bookingdata->course->id);
+                    $this->bookingdata->booking->course->id);
             $addsqlwhere .= " AND u.id IN ($groupsql)";
         }
         $remove = array('signinextracols1', 'signinextracols2', 'signinextracols3', 'fullname',
@@ -324,9 +324,9 @@ class generator {
             $this->pdf->SetHeaderData('', 0, $this->bookingdata->option->text, '');
         } else if ($this->title == 1) {
             $this->pdf->SetHeaderData('', 0,
-                    $this->bookingdata->booking->name . ': ' . $this->bookingdata->option->text, '');
+                    $this->bookingdata->booking->settings->name . ': ' . $this->bookingdata->option->text, '');
         } else {
-            $this->pdf->SetHeaderData('', 0, $this->bookingdata->booking->name, '');
+            $this->pdf->SetHeaderData('', 0, $this->bookingdata->booking->settings->name, '');
         }
         $this->pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
         $this->pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
@@ -483,9 +483,9 @@ class generator {
      */
     public function get_signinsheet_logo() {
         $fs = get_file_storage();
-        $context = \context_module::instance($this->bookingdata->cm->id);
+        $context = \context_module::instance($this->bookingdata->booking->cm->id);
         $files = $fs->get_area_files($context->id, 'mod_booking', 'signinlogoheader',
-                $this->bookingdata->booking->id, 'sortorder,filepath,filename', false);
+                $this->bookingdata->booking->settings->id, 'sortorder,filepath,filename', false);
 
         if (!$files) {
             $files = $fs->get_area_files(\context_system::instance()->id, 'booking',
@@ -518,9 +518,9 @@ class generator {
     public function get_signinsheet_logo_footer() {
         $fileuse = false;
         $fs = get_file_storage();
-        $context = \context_module::instance($this->bookingdata->cm->id);
+        $context = \context_module::instance($this->bookingdata->booking->cm->id);
         $files = $fs->get_area_files($context->id, 'mod_booking', 'signinlogofooter',
-                $this->bookingdata->booking->id, 'sortorder,filepath,filename', false);
+                $this->bookingdata->booking->settings->id, 'sortorder,filepath,filename', false);
 
         if (!$files) {
             $files = $fs->get_area_files(\context_system::instance()->id, 'booking',
@@ -571,7 +571,8 @@ class generator {
                 foreach ($custfieldvalues as $record) {
                     if (!empty($record->value)) {
                         $this->pdf->Cell(0, 0,
-                                $customfields[$record->cfgname]['value'] . ": " . $record->value, 0,
+                                $customfields[$record->cfgname]['value'] . ": " .
+                                ($customfields[$record->cfgname]['type'] == 'multiselect' ? implode(", ", explode("\n", $record->value)) : $record->value), 0,
                                 1, '', 0, '', 1);
                     }
                 }
@@ -623,7 +624,7 @@ class generator {
                     $name = get_string('signature', 'mod_booking');
                     break;
                 case 'institution':
-                    $name = get_string('institution');
+                    $name = get_string('institution', 'booking');
                     break;
                 case 'description':
                     $name = get_string('description');

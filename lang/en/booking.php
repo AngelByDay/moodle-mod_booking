@@ -33,6 +33,7 @@ $string['addusertogroup'] = 'Add user to group: ';
 
 // view.php
 $string['addmorebookings'] = 'Add more bookings';
+$string['addmorebookings'] = 'Add more bookings';
 $string['allowupdate'] = 'Allow booking to be updated';
 $string['answered'] = 'Answered';
 $string['attachical'] = 'Attach single ical event per booking';
@@ -81,8 +82,7 @@ $string['fillinatleastoneoption'] = 'You need to provide at least two possible a
 $string['full'] = 'Full';
 $string['goenrol'] = 'Go to registration';
 $string['gotop'] = 'Go to top';
-$string['havetologin'] = 'You have to log in before you can submit your booking';
-$string['infonobookingoption'] = 'Please use the block {$a} in order to add your first booking option';
+$string['infonobookingoption'] = 'In order to add a booking option please use the settings block or the settings-icon on top of the page';
 $string['limit'] = 'Limit';
 $string['modulename'] = 'Booking';
 $string['modulenameplural'] = 'Bookings';
@@ -121,25 +121,32 @@ $string['enrolledinoptions'] = "alredy booked in booking options: ";
 // Bookingform
 $string['address'] = 'Address';
 $string['advancedoptions'] = 'Advanced options';
-$string['btnbooknowname'] = 'Name of button "Book now"';
-$string['btncacname'] = 'Name of button "Confirm activity completion"';
-$string['btncancelname'] = 'Name of button "Cancel booking"';
+$string['btnbooknowname'] = 'Name of button: Book now';
+$string['btncacname'] = 'Name of button: Confirm activity completion';
+$string['btncancelname'] = 'Name of button: Cancel booking';
 $string['disablebookingusers'] = 'Disable booking of users - hide Book now button.';
-$string['howmanyusers'] = 'How many users you can book?';
+$string['howmanyusers'] = 'Max. number of users a teacher assigned to the option can book';
 $string['howmanyusers_help'] = '';
 $string['institution'] = 'Institution';
-$string['lblsputtname'] = 'Name of label "Send poll url to teachers"';
-$string['lblteachname'] = 'Name of label "Teachers"';
+$string['lblsputtname'] = 'Name of label: Send poll url to teachers';
+$string['lblteachname'] = 'Name of label: Teachers';
 $string['limitanswers_help'] = 'If you change this option and you have booked people, you can remove them without notification!';
 $string['location'] = 'Location';
 $string['removeafterminutes'] = 'Remove activity completion after N minutes';
-$string['banusernames'] = "Ban usernames";
-$string['banusernames_help'] = "To limit which usernames can't apply just write in this field, and separate with coma. To ban usernames, that end with gmail.com and yahoo.com just write: gmail.com, yahoo.com";
+$string['banusernames'] = 'Ban usernames';
+$string['banusernames_help'] = 'To limit which usernames can`t apply just write in this field, and separate with coma. To ban usernames, that end with gmail.com and yahoo.com just write: gmail.com, yahoo.com';
 $string['showhelpfullnavigationlinks'] = 'Show navigation links.';
-$string['showhelpfullnavigationlinks_helt'] = 'Show "Go to registration" and "Go to top" links.';
-$string['disabled'] = 'Disabled';
-$string['completionmodule'] = 'Activity completed';
-$string['completionmodule_help'] = 'Delete all users, that completed this activity. Users will be deleted with a click of button on report page!';
+$string['showhelpfullnavigationlinks_help'] = 'Show \'Go to registration\' and \'Go to top\' links.';
+$string['completionmodule'] = 'Upon completion of the selected course activity, enable bulk deletion of user bookings';
+$string['completionmodule_help'] = 'Display bulk deletion button for booking answers, if another course module has been completed. The bookings of users will be deleted with a click of a button on the report page! Only activities with completion enabled can be selected from the list.';
+$string['teacherroleid'] = 'Subscribe teacher with that role to the course';
+$string['bookingoptiontitle'] = 'Booking option title';
+$string['addastemplate'] = 'Add as template';
+$string['notemplate'] = 'Do not use as template';
+$string['astemplate'] = 'Use as template in this course';
+$string['asglobaltemplate'] = 'Use as global template';
+$string['templatedeleted'] = 'Template was deleted!';
+$string['bookingoptionname'] = 'Booking option name';
 
 // Categories
 $string['category'] = 'Category';
@@ -189,9 +196,8 @@ $string['showallbookings'] = 'All bookings';
 $string['showmybookingsonly'] = 'My bookings';
 $string['showactive'] = 'Active bookings';
 $string['mailconfirmationsent'] = 'You will shortly receive a confirmation e-mail';
-$string['deletebookingoption'] = 'Delete this booking option';
 $string['confirmdeletebookingoption'] = 'Do you really want to delete this booking option?';
-$string['norighttobook'] = 'Booking is not possible for your user role. Please contact the site administrator to give you the appropriate rights or sign in.';
+$string['norighttobook'] = 'Booking is not possible for your user role. Please contact the site administrator to give you the appropriate rights or enrol/sign in.';
 $string['createdby'] = 'Booking module created by edulabs.org';
 $string['maxperuserwarning'] = 'You currently have used {$a->count} out of {$a->limit} maximum available bookings ({$a->eventtype}) for your user account';
 $string['bookedpast'] = 'Booked (course terminated)';
@@ -203,11 +209,10 @@ $string['mailconfirmationsent'] = 'You will shortly receive a confirmation e-mai
 $string['managebooking'] = 'Manage';
 $string['mustfilloutuserinfobeforebooking'] = 'Befor proceeding to the booking form, please fill in some personal booking information';
 $string['nobookingselected'] = 'No booking option selected';
-$string['norighttobook'] = 'Booking is not possible for your user role. Please contact the site administrator to give you the appropriate rights or sign in.';
 $string['notbooked'] = 'Not yet booked';
 $string['onwaitinglist'] = 'You are on the waiting list';
 $string['organizatorname'] = 'Organizer name';
-$string['placesavailable'] = 'Places available: {$a->available} of {$a->maxanswers}';
+$string['availableplaces'] = 'Places available: {$a->available} of {$a->maxanswers}';
 $string['pollurl'] = 'Poll url';
 $string['pollurlteachers'] = 'Teachers poll url';
 $string['select'] = 'Selection';
@@ -225,6 +230,7 @@ $string['waitingplacesavailable'] = 'Waiting list places available: {$a->overboo
 $string['waitspaceavailable'] = 'Places on waiting list available';
 $string['banusernameswarning'] = "Your username is banned so you can't book.";
 $string['duplicatebooking'] = 'Duplicate this booking option';
+$string['moveoptionto'] = 'Move booking option to other booking instance';
 
 // tag templates
 $string['cancel'] = 'Cancel';
@@ -254,6 +260,8 @@ $string['errorpagination'] = 'Please enter a number bigger than 0';
 $string['notconectedbooking'] = 'Not connected';
 $string['conectedbooking_help'] = 'Booking instance eligible for transferring booked users. You can define from which option within the selected booking instance and how many users you will accept.';
 $string['cancancelbook'] = 'Allow user to cancel or book their booking when it is started?';
+$string['cancancelbookdays'] = 'Disallow users to cancel their booking n days before start';
+$string['cancancelbookdaysno'] = "Don't limit";
 $string['addtocalendar'] = 'Add to calendar';
 $string['limitanswers'] = 'Limit the number of participants';
 $string['maxparticipantsnumber'] = 'Max. number of participants';
@@ -264,7 +272,7 @@ $string['sendconfirmmailtobookingmanger'] = 'Send confirmation e-mail to booking
 $string['allowdelete'] = 'Allow users to cancel their booking themselves';
 $string['bookingpolicy'] = 'Booking policy';
 $string['confirmationmessagesettings'] = 'Confirmation e-mail settings';
-$string['usernameofbookingmanager'] = 'Username of the booking manager';
+$string['usernameofbookingmanager'] = 'Choose a booking manager';
 $string['usernameofbookingmanager_help'] = 'Username of the user who will be displayed in the "From" field of the confirmation notifications. If the option "Send confirmation e-mail to booking manager" is enabled, this is the user who receives a copy of the confirmation notifications.';
 $string['bookingmanagererror'] = 'The username entered is not valid. Either it does not exist or there are more then one users with this username (example: if you have mnet and local authentication enabled)';
 $string['autoenrol'] = 'Automatically enrol users';
@@ -678,7 +686,7 @@ $string['daystonotify_help'] = "Will work only if start and end date of option a
 
 $string['fields'] = 'Fields to display in different contexts';
 $string['reportfields'] = 'Downlodable responses fields (csv, xls-Download)';
-$string['responsesfields'] = 'Fields on the "manage responses" page';
+$string['responsesfields'] = 'Fields on the manage responses page';
 $string['optionsfields'] = 'Fields on the booking options overview page';
 $string['signinsheetfields'] = 'Sign-in sheet fields (PDF)';
 $string['signinonesession'] = 'Display selected session time on the sign-in sheet';
@@ -686,7 +694,7 @@ $string['signinaddemptyrows'] = 'Number of empty rows to add for people who did 
 $string['includeteachers'] = 'Include teachers in the sign-in sheet';
 $string['choosepdftitle'] = 'Select a title for the sign-in sheet';
 $string['addtogroup'] = 'Automatically enrol users in group';
-$string['addtogroup_help'] = 'Automatically enrol users in group - group will be created automatically with name "Bookin name - Option name"';
+$string['addtogroup_help'] = 'Automatically enrol users in group - group will be created automatically with name: Bookin name - Option name';
 $string['bookingattachment'] = 'Attachment';
 $string['bookingcategory'] = 'Category';
 $string['bookingduration'] = 'Duration';
@@ -700,13 +708,13 @@ $string['editinstitutions'] = 'Edit institutions';
 $string['entervalidurl'] = 'Please, enter a valid URL!';
 $string['eventtype'] = 'Event type';
 $string['groupname'] = 'Group name';
-$string['lblacceptingfrom'] = 'Name of label "Accepting from"';
-$string['lblbooking'] = 'Name of label "Booking"';
-$string['lblinstitution'] = 'Name of label "Institution"';
-$string['lbllocation'] = 'Name of label "Location"';
-$string['lblname'] = 'Name of label "Name"';
-$string['lblnumofusers'] = 'Name of label "Num. of users"';
-$string['lblsurname'] = 'Name of label "Surname"';
+$string['lblacceptingfrom'] = 'Name of label: Accepting from';
+$string['lblbooking'] = 'Name of label: Booking';
+$string['lblinstitution'] = 'Name of label: Institution';
+$string['lbllocation'] = 'Name of label: Location';
+$string['lblname'] = 'Name of label: Name';
+$string['lblnumofusers'] = 'Name of label: Num. of users';
+$string['lblsurname'] = 'Name of label: Surname';
 $string['maxperuser'] = 'Max current bookings per user';
 $string['maxperuser_help'] = 'The maximum number of bookings an individual user can make in this activity at once. After an event end time has passed, it is no longer counted against this limit.';
 $string['notificationtext'] = 'Notification message';
@@ -722,8 +730,9 @@ $string['enablepresence'] = 'Enable presence';
 $string['removeuseronunenrol'] = 'Remove user from booking, when unenrol from course?';
 
 // editoptions.php
-$string['addeditbooking'] = 'Edit booking';
+$string['addeditbooking'] = 'Edit booking option';
 $string['addnewbookingoption'] = 'Add a new booking option';
+$string['addnewbookingoptionfromtemplate'] = 'Add a new booking option from template';
 $string['choosecourse'] = 'Choose a course';
 $string['courseendtime'] = 'End time of the course';
 $string['coursestarttime'] = 'Start time of the course';
@@ -739,6 +748,13 @@ $string['waitinglisttaken'] = 'On the waiting list';
 $string['groupexists'] = 'The group already exists in the target course, please choose another name for the booking option';
 $string['groupdeleted'] = 'This booking instance creates groups automatically in the target course. But the group has been manually deleted in the target course. Activate the following checkbox in order to recreate the group';
 $string['recreategroup'] = 'Recreate group in the target course and enrol users in group';
+$string['copy'] = ' - Copy';
+$string['enrolmentstatus'] = 'Do not enrol users immediately but only at course start time';
+$string['duplicatename'] = 'This booking option name already exists. Please choose another one.';
+$string['newtemplatesaved'] = 'New template for booking option was saved.';
+$string['manageoptiontemplates'] = 'Manage booking option templates';
+$string['usedinbookinginstances'] = 'Template is used in following booking instances';
+$string['optiontemplatename'] = 'Option template name';
 
 // importoptions.php
 $string['csvfile'] = 'CSV file';
@@ -748,9 +764,11 @@ $string['dateparseformat_help'] = 'Please, use date format like specified in CSV
 $string['defaultdateformat'] = 'j.n.Y H:i:s';
 $string['importcsvtitle'] = 'Import CSV';
 $string['importfinished'] = 'Importing finished!';
-$string['noteacherfound'] = 'No teacher found in line {$a}: ';
+$string['noteacherfound'] = 'The user specified as teacher on line {$a} does not exist on the platform.';
 $string['nouserfound'] = 'No user found: ';
-$string['wrongfile'] = 'Wrong file!';
+$string['import_failed'] = 'The import failed du to following reason: ';
+$string['import_partial'] = 'The import was only partially completed. There were problems with following lines and they were not imported: ';
+$string['importinfo'] = 'Import info: You can use the following columns in the csv upload (Explanation in parenthesis)';
 
 // Confirmation mail
 $string['days'] = '{$a} days';
@@ -862,7 +880,6 @@ Course:   {$a->title}
 Date: {$a->startdate} {$a->starttime} - {$a->enddate} {$a->endtime}';
 
 // report.php
-$string['activitycompleted'] = 'Activity completed';
 $string['addteachers'] = 'Add teachers';
 $string['allmailssend'] = 'All e-mails to the users have been sent!';
 $string['associatedcourse'] = 'Associated course';
@@ -879,7 +896,7 @@ $string['generaterecnum'] = "Generate numbers";
 $string['generaterecnumareyousure'] = "This will generate new numbers and permanently delete the old one!";
 $string['generaterecnumnotification'] = "New numbers have been generated.";
 $string['gotobooking'] = '<< Bookings';
-$string['lblbooktootherbooking'] = 'Name of button "Book users to other booking"';
+$string['lblbooktootherbooking'] = 'Name of button: Book users to other booking';
 $string['no'] = 'No';
 $string['nocourse'] = 'No course selected for this booking option';
 $string['nodateset'] = 'Course date not set';
@@ -890,7 +907,6 @@ $string['optiondates'] = 'Multiple dates session';
 $string['optionid'] = 'Option ID';
 $string['optionmenu'] = 'This booking option';
 $string['searchdate'] = 'Date';
-$string['searchfinished'] = 'Course completed';
 $string['searchname'] = 'First name';
 $string['searchsurname'] = 'Last name';
 $string['yes'] = 'Yes';
@@ -901,11 +917,12 @@ $string['copypollurl'] = 'Copy poll URL';
 $string['gotobooking'] = '<< Bookings';
 $string['nousers'] = 'No users!';
 $string['booktootherbooking'] = 'Book users to other booking';
-$string['lblbooktootherbooking'] = 'Name of button "Book users to other booking option"';
+$string['lblbooktootherbooking'] = 'Name of button: Book users to other booking option';
 $string['toomuchusersbooked'] = 'The max number of users you can book is: {$a}';
 $string['transfer'] = 'Transfer';
 $string['transferheading'] = 'Transfer selected users to the selected booking option';
 $string['transfersuccess'] = 'The users have successfully been transferred to the new booking option';
+$string['transferoptionsuccess'] = 'The booking option and the users have successfully been transferred.';
 $string['transferproblem'] = 'The following could not be transferred due to booking option limitation or user limitation: {$a}';
 $string['searchwaitinglist'] = 'On waiting list';
 $string['selectatleastoneuser'] = 'Please, select at least 1 user!';
@@ -927,7 +944,6 @@ $string['numrec'] = "Rec. num.";
 $string['generaterecnum'] = "Generate numbers";
 $string['generaterecnumareyousure'] = "This will generate new numbers and permanently delete the old one!";
 $string['generaterecnumnotification'] = "New numbers have been generated.";
-$string['activitycompleted'] = 'Activity completed';
 $string['waitinglist'] = 'Waiting list';
 $string['searchwaitinglist'] = 'On waiting list';
 $string['ratingsuccess'] = 'The ratings were successfully updated';
@@ -957,9 +973,9 @@ $string['userssucesfullygetnewpresencestatus'] = 'Presence status for selected u
 // Send message
 $string['activitycompletionsuccess'] = 'All selected users have been marked for activity completion';
 $string['booking:communicate'] = 'Can communicate';
-$string['confirmactivitycompletion'] = 'Confirm activity completion';
-$string['enablecompletion'] = 'Enable manual activity completion in booking option responses';
-$string['enablecompletiongroup'] = 'Manual activity completion';
+$string['confirmoptioncompletion'] = 'Confirm completion';
+$string['enablecompletion'] = 'At least one of the booked options has to be marked as completed';
+$string['enablecompletiongroup'] = 'Require entries';
 $string['messagesend'] = 'Your message has been sent.';
 $string['messagesubject'] = 'Subject';
 $string['messagetext'] = 'Message';
@@ -969,6 +985,8 @@ $string['users'] = '<< Manage responses';
 
 // lib.php
 $string['pollstrftimedate'] = '%Y-%m-%d';
+$string['mybookings'] = 'My bookings';
+$string['bookuserswithoutcompletedactivity'] = "Book users without completed activity";
 
 // all_users.php
 $string['completed'] = 'Completed';
@@ -1022,20 +1040,23 @@ $string['pdfroom'] = 'Room: ';
 $string['pdfstudentname'] = "Student Name";
 $string['pdfsignature'] = "Signature";
 $string['pdftodaydate'] = 'Date: ';
-
 $string['booking:readallinstitutionusers'] = 'Show all users';
+$string['booking:manageoptiontemplates'] = 'Can create templates';
 
 // File: settings.php
 $string['icalcfg'] = 'Configuration of the ical attachements';
 $string['icalcfgdesc'] = 'Configure the ical.ics files that are attached to e-mail messages. These files alow adding the booking dates to the personal calendar.';
 $string['icalfieldlocation'] = 'Text to display in ical field location';
-$string['icalfieldlocationdesc'] = 'Choose from the dropdown list what what text should be used for the calendar field "location"';
+$string['icalfieldlocationdesc'] = 'Choose from the dropdown list what what text should be used for the calendar field location';
 $string['customfield'] = 'Custom field to be set in the booking option settings. It will then be shown in the booking option overview.';
 $string['customfielddesc'] = 'After adding a custom field, you can define the value for the field in the booking option settings. The value will be shown in the booking option description.';
 $string['customfieldconfigure'] = 'Custom booking option fields';
 $string['customfielddef'] = 'Custom booking option field';
 $string['customfieldtype'] = 'Field type';
 $string['textfield'] = 'Single line text input';
+$string['selectfield'] = 'Drop-down list';
+$string['multiselect'] = 'Multiple selection';
+$string['customfieldoptions'] = 'List of possible values';
 $string['delcustfield'] = 'Delete this field and all associated field settings in the booking options';
 $string['signinlogo'] = 'Logo to display on the sign-in sheet';
 $string['cfgsignin'] = 'Sign-In Sheet Configuration';
@@ -1077,3 +1098,30 @@ $string['privacy:metadata:booking_teachers'] = 'Represents the teacher of an eve
 $string['privacy:metadata:booking_teachers:userid'] = 'User that is teaching this event';
 $string['privacy:metadata:booking_teachers:optionid'] = 'Which version of an event is taught';
 $string['privacy:metadata:booking_teachers:completed'] = 'If task is completed';
+
+// calendar.php
+$string['usercalendarentry'] = 'You are booked for this <a href="{$a}">session</a>.';
+$string['bookingoptioncalendarentry'] = 'Go to <a href="{$a}">booking option</a>.';
+
+// mybookings.php
+$string['active'] = "Active";
+$string['terminated'] = "Terminated";
+$string['notstarted'] = "Not yet started";
+
+// subscribeusersctivity.php
+$string['transefusers'] = "Transfer users";
+$string['transferhelp'] = 'Transfer users, that have not completed activity from selected option to {$a}.';
+$string['sucesfullytransfered'] = 'Users were sucesfully transfered.';
+
+$string['confirmactivtyfrom'] = 'Confirm users activity from';
+$string['sucesfullcompleted'] = 'Activity was sucesfully completed for users.';
+$string['enablecompletion'] = 'Count of entries';
+$string['confirmuserswith'] = 'Confirm users who completed activity or received badge';
+$string['confirmusers'] = 'Confirm users activity';
+
+// optiontemplatessettings.php
+$string['optiontemplatessettings'] = 'Booking option templates';
+$string['defaulttemplate'] = 'Default template';
+$string['defaulttemplatedesc'] = 'Default booking option teplate, when creatting new booking option.';
+$string['dontuse'] = 'Don\'t use template';
+$string['bookingoptionsfromtemplatemenu'] = 'New booking option from template';
