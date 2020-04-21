@@ -365,6 +365,12 @@ function booking_add_instance($booking) {
         $booking->timeopen = $booking->timeclose = 0;
     }
 
+    if (isset($booking->showviews) && count($booking->showviews) > 0) {
+        $booking->showviews = implode(',', $booking->showviews);
+    } else {
+        $booking->showviews = '';
+    }
+
     if (isset($booking->reportfields) && count($booking->reportfields) > 0) {
         $booking->reportfields = implode(',', $booking->reportfields);
     } else {
@@ -460,6 +466,12 @@ function booking_update_instance($booking) {
     $booking->timemodified = time();
     $cm = get_coursemodule_from_instance('booking', $booking->id);
     $context = context_module::instance($cm->id);
+
+    if (isset($booking->showviews) && count($booking->showviews) > 0) {
+        $booking->showviews = implode(',', $booking->showviews);
+    } else {
+        $booking->showviews = '';
+    }
 
     if (isset($booking->responsesfields) && count($booking->responsesfields) > 0) {
         $booking->responsesfields = implode(',', $booking->responsesfields);
@@ -902,7 +914,7 @@ function booking_extend_settings_navigation(settings_navigation $settings, navig
                 navigation_node::TYPE_CONTAINER);
 
         if (has_capability('mod/booking:manageoptiontemplates', $context)) {
-            $settingnode->add(get_string("manageoptiontemplates", "mod_booking"),
+            $settingnode->add(get_string("canmanageoptiontemplates", "mod_booking"),
                 new moodle_url('optiontemplatessettings.php', array('id' => $cm->id)));
         }
 
@@ -974,10 +986,12 @@ function booking_extend_settings_navigation(settings_navigation $settings, navig
                                     array('id' => $cm->id, 'optionid' => $optionid)));
                 }
             }
-            if (has_capability('mod/booking:updatebooking', $contextcourse)) {
+            $modinfo = get_fast_modinfo($course);
+            $bookinginstances = isset($modinfo->instances['booking']) ? count($modinfo->instances['booking']) : 0;
+            if (has_capability('mod/booking:updatebooking', $contextcourse) && $bookinginstances > 1) {
                 $settingnode->add(get_string('moveoptionto', 'booking'),
                     new moodle_url('/mod/booking/moveoption.php',
-                        array('id' => $cm->id, 'optionid' => $optionid)));
+                        array('id' => $cm->id, 'optionid' => $optionid, 'sesskey' => sesskey())));
             }
             if (has_capability ( 'mod/booking:readresponses', $context ) || booking_check_if_teacher ($option, $USER )) {
                 $completion = new \completion_info($course);
@@ -2240,7 +2254,7 @@ function booking_generate_email_params(stdClass $booking, stdClass $option, stdC
     $params->status = booking_get_user_status($user->id, $option->id, $booking->id, $cmid);
     $params->participant = fullname($user);
     $params->email = $user->email;
-    $params->title = s($option->text);
+    $params->title = format_string($option->text);
     $params->duration = $booking->duration;
     $params->starttime = $option->coursestarttime ? userdate($option->coursestarttime, $timeformat) : '';
     $params->endtime = $option->courseendtime ? userdate($option->courseendtime, $timeformat) : '';

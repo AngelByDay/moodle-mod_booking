@@ -15,6 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 namespace mod_booking;
 
+use html_writer;
+use stdClass;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/booking/lib.php');
@@ -40,10 +43,10 @@ class booking {
      */
     protected $context = null;
 
-    /** @var \stdClass the course this booking instance belongs to */
+    /** @var stdClass the course this booking instance belongs to */
     public $course = null;
 
-    /** @var \stdClass the course module for this assign instance */
+    /** @var stdClass the course module for this assign instance */
     public $cm = null;
 
     /** @var array of user objects who have capability to book. object contains only id */
@@ -104,7 +107,7 @@ class booking {
     }
 
     public function apply_tags() {
-        $tags = new \mod_booking\booking_tags($this->cm->course);
+        $tags = new booking_tags($this->cm->course);
         $this->settings = $tags->booking_replace($this->settings);
     }
 
@@ -112,7 +115,7 @@ class booking {
      *
      */
     public function get_url_params() {
-        $bu = new \mod_booking\booking_utils();
+        $bu = new booking_utils();
         $params = $bu->generate_params($this->settings);
         $this->settings->pollurl = $bu->get_body($this->settings, 'pollurl', $params);
         $this->settings->pollurlteachers = $bu->get_body($this->settings, 'pollurlteachers', $params);
@@ -252,13 +255,14 @@ class booking {
     /**
      * Get all booking option ids as an array of numbers - only where is teacher.
      *
+     * @param integer bookingid
      * @return array of ids
      */
-    public function get_all_optionids_of_teacher() {
+    public static function get_all_optionids_of_teacher($bookingid) {
         global $DB, $USER;
 
         return $DB->get_fieldset_select('booking_teachers', 'optionid',
-                "userid = {$USER->id} AND bookingid = {$this->settings->id}");
+            "userid = {$USER->id} AND bookingid = $bookingid");
     }
 
     /**
@@ -300,7 +304,7 @@ class booking {
     /**
      * Display a message about the maximum nubmer of bookings this user is allowed to make.
      *
-     * @param \stdClass $user
+     * @param stdClass $user
      * @return string
      */
     public function show_maxperuser($user) {
@@ -313,7 +317,7 @@ class booking {
 
             foreach ($disabledusernames as $value) {
                 if (strpos($USER->username, trim($value)) !== false) {
-                    $warning = \html_writer::tag('p', get_string('banusernameswarning', 'mod_booking'));
+                    $warning = html_writer::tag('p', get_string('banusernameswarning', 'mod_booking'));
                 }
             }
         }
@@ -322,19 +326,19 @@ class booking {
             return $warning; // No per-user limits.
         }
 
-        $outdata = new \stdClass();
+        $outdata = new stdClass();
         $outdata->limit = $this->settings->maxperuser;
         $outdata->count = $this->get_user_booking_count($user);
         $outdata->eventtype = $this->settings->eventtype;
 
-        $warning .= \html_writer::tag('div', get_string('maxperuserwarning', 'mod_booking', $outdata), array ('class' => 'alert alert-warning'));
+        $warning .= html_writer::tag('div', get_string('maxperuserwarning', 'mod_booking', $outdata), array ('class' => 'alert alert-warning'));
         return $warning;
     }
 
     /**
      * Determins the number of bookings that a single user has already made in all booking options
      *
-     * @param \stdClass $user
+     * @param stdClass $user
      * @return number of bookings made by user
      */
     public function get_user_booking_count($user) {
@@ -343,16 +347,12 @@ class booking {
             return $this->userbookings;
         }
 
-        $activebookingcount = $DB->count_records_sql("SELECT
-    COUNT(*)
-FROM
-    {booking_answers} ba
-        LEFT JOIN
-    {booking_options} bo ON bo.id = ba.optionid
-WHERE
-    ba.bookingid = ? AND ba.userid = ?
-        AND (bo.courseendtime = 0
-        OR bo.courseendtime > ?)", array($this->id, $user->id, time()));
+        $activebookingcount = $DB->count_records_sql("SELECT COUNT(*)
+            FROM {booking_answers} ba
+            LEFT JOIN {booking_options} bo ON bo.id = ba.optionid
+            WHERE ba.bookingid = ?
+            AND ba.userid = ?
+            AND (bo.courseendtime = 0 OR bo.courseendtime > ?)", array($this->id, $user->id, time()));
 
         return $activebookingcount;
     }
@@ -360,7 +360,7 @@ WHERE
     /**
      * Get array of option names, to which user is booked.
      *
-     * @param \stdClass $user
+     * @param stdClass $user
      * @return array of option names
      */
     public function get_user_booking($user) {

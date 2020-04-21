@@ -30,13 +30,15 @@ class option_form extends moodleform {
         $mform->addElement('header', 'general', get_string('general', 'form'));
         $mform->addElement('text', 'text', get_string('bookingoptionname', 'booking'), array('size' => '64'));
         $mform->addRule('text', get_string('required'), 'required', null, 'client');
+        $mform->addRule('text', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('text', PARAM_TEXT);
         } else {
             $mform->setType('text', PARAM_CLEANHTML);
         }
         if (isset($this->_customdata['cmid'])) {
-            $booking = new booking($this->_customdata['cmid']);
+            $cmid = $this->_customdata['cmid'];
+            $booking = new booking($cmid);
         }
         // Add custom fields here.
         $customfields = booking_option::get_customfield_settings();
@@ -133,8 +135,6 @@ class option_form extends moodleform {
         foreach ($allcourses as $id => $courseobject) {
             $coursearray[$id] = $courseobject->shortname;
         }
-        // Remove this course from list.
-        unset($coursearray[$COURSE->id]);
         $options = array(
             'noselectionstring' => get_string('donotselectcourse', 'booking'),
         );
@@ -243,13 +243,13 @@ class option_form extends moodleform {
         }
 
         // Hidden elements.
-        $mform->addElement('hidden', 'id');
+        $mform->addElement('hidden', 'id', $cmid);
         $mform->setType('id', PARAM_INT);
 
-        $mform->addElement('hidden', 'bookingid');
+        $mform->addElement('hidden', 'bookingid', $this->_customdata['bookingid']);
         $mform->setType('bookingid', PARAM_INT);
 
-        $mform->addElement('hidden', 'optionid');
+        $mform->addElement('hidden', 'optionid', $this->_customdata['optionid']);
         $mform->setType('optionid', PARAM_INT);
 
         $mform->addElement('hidden', 'bookingname');

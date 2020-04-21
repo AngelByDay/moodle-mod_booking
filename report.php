@@ -165,11 +165,11 @@ $bookingdata->apply_tags();
 $bookingdata->get_url_params();
 $optionteachers = $bookingdata->get_teachers();
 $paging = $bookingdata->booking->settings->paginationnum;
+$isteacher = booking_check_if_teacher($bookingdata->option);
 if ($paging < 1) {
     $paging = 25;
 }
-if (!(booking_check_if_teacher($bookingdata->option) ||
-         has_capability('mod/booking:readresponses', $context))) {
+if (!($isteacher) || has_capability('mod/booking:readresponses', $context)) {
     require_capability('mod/booking:readresponses', $context);
 }
 
@@ -208,9 +208,9 @@ if ($action == 'deletebookingoption' && $confirm == 1 &&
     die();
 }
 
-$PAGE->navbar->add($bookingdata->option->text);
-$PAGE->set_title(format_string($bookingdata->booking->settings->name) . ": " . $bookingdata->option->text);
-$PAGE->set_heading($course->fullname);
+$PAGE->navbar->add(format_string($bookingdata->option->text));
+$PAGE->set_title(format_string($bookingdata->booking->settings->name) . ": " . format_string($bookingdata->option->text));
+$PAGE->set_heading(format_string($course->fullname));
 
 if (isset($action) && $action == 'sendpollurlteachers' &&
          has_capability('mod/booking:communicate', $context)) {
@@ -227,7 +227,7 @@ $bookingdata->option->cmid = $cm->id;
 $bookingdata->option->autoenrol = $bookingdata->booking->settings->autoenrol;
 
 $tableallbookings = new \mod_booking\all_userbookings('mod_booking_all_users_sort_new', $bookingdata, $cm, $optionid);
-$tableallbookings->is_downloading($download, $bookingdata->option->text, $bookingdata->option->text);
+$tableallbookings->is_downloading($download, format_string($bookingdata->option->text), format_string($bookingdata->option->text));
 
 // Remove page number from url otherwise empty results are shown when searching via first/lastname letters.
 $tablebaseurl = $currenturl;
@@ -250,8 +250,7 @@ if (!$tableallbookings->is_downloading()) {
 
         $allselectedusers = array();
 
-        if (isset($_POST['generaterecnum']) && (booking_check_if_teacher($bookingdata->option,
-                $USER) || has_capability('mod/booking:updatebooking', $context))) {
+        if (isset($_POST['generaterecnum']) && (($isteacher) || has_capability('mod/booking:updatebooking', $context))) {
             if (isset($_POST['user'])) {
                 foreach ($_POST['user'] as $value) {
                     $allselectedusers[] = array_keys($value)[0];
@@ -567,7 +566,7 @@ if (!$tableallbookings->is_downloading()) {
 
     echo $OUTPUT->heading(
             html_writer::link(new moodle_url('/mod/booking/view.php', array('id' => $cm->id)),
-                    $bookingdata->booking->settings->name) . ' > ' . $bookingdata->option->text, 4);
+                    format_string($bookingdata->booking->settings->name)) . ' > ' . format_string($bookingdata->option->text), 4);
 
     $teachers = array();
 
@@ -604,11 +603,17 @@ if (!$tableallbookings->is_downloading()) {
         $linkst = "(" . implode(", ", $linkst) . ")";
     }
 
+    if ($isteacher) {
+        $url = new moodle_url('/mod/booking/subscribeusers.php',
+            array('id' => $cm->id, 'optionid' => $optionid));
+        $linkst = $linkst . html_writer::link($url, html_writer::tag('p', get_string('bookotherusers', 'booking'), ['class' => 'btn btn-secondary']));
+    }
+
     echo "<p>" .
              ($bookingdata->option->coursestarttime == 0 ? get_string('nodateset', 'booking') : userdate(
                     $bookingdata->option->coursestarttime, get_string('strftimedatetime')) . " - " .
              userdate($bookingdata->option->courseendtime, get_string('strftimedatetime'))) . " | " .
-             (empty($bookingdata->booking->settings->lblteachname) ? get_string('teachers', 'booking') . ': ' : $bookingdata->booking->settings->lblteachname) .
+             (empty($bookingdata->booking->settings->lblteachname) ? get_string('teachers', 'booking') . ': ' : $bookingdata->booking->settings->lblteachname . ': ') .
              implode(', ', $teachers) . " {$linkst}</p>";
 
     $links = array();
@@ -734,7 +739,7 @@ if (!$tableallbookings->is_downloading()) {
             foreach ($tableallbookings->rawdata as $answer) {
                 foreach ($otheroptions as $option) {
                     if ($answer->userid == $option->userid) {
-                        $answer->otheroptions .= $option->text . ", ";
+                        $answer->otheroptions .= format_string($option->text) . ", ";
                     }
                 }
                 $answer->otheroptions = trim($answer->otheroptions, ', ');

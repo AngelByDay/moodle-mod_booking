@@ -13,11 +13,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+use mod_booking\all_options;
+use mod_booking\booking;
+
 require_once("../../config.php");
 require_once("locallib.php");
 require_once($CFG->libdir . '/completionlib.php');
 require_once("{$CFG->libdir}/tablelib.php");
-require_once("{$CFG->dirroot}/mod/booking/classes/all_options.php");
 require_once($CFG->dirroot . '/comment/lib.php');
 
 $id = required_param('id', PARAM_INT); // Course Module ID.
@@ -46,7 +48,7 @@ list($course, $cm) = get_course_and_cm_from_cmid($id, 'booking');
 require_course_login($course, false, $cm);
 $context = context_module::instance($cm->id);
 
-$booking = new \mod_booking\booking($cm->id);
+$booking = new booking($cm->id);
 
 if (!empty($action)) {
     $urlparams['action'] = $action;
@@ -146,7 +148,7 @@ if ($action == 'delbooking' and confirm_sesskey() && $confirm == 1 and
 
     if ($bookingdata->user_delete_response($USER->id)) {
         echo $OUTPUT->header();
-        $contents = get_string('bookingdeleted', 'booking');
+        $contents = html_writer::tag('p', get_string('bookingdeleted', 'booking'));
         $options = array('id' => $cm->id);
         $contents .= $OUTPUT->single_button(new moodle_url('view.php', $options),
                 get_string('continue'), 'get');
@@ -174,7 +176,7 @@ if ($action == 'delbooking' and confirm_sesskey() && $confirm == 1 and
     $options = array('id' => $cm->id, 'action' => 'delbooking', 'confirm' => 1,
         'optionid' => $optionid, 'sesskey' => $USER->sesskey);
 
-    $deletemessage = $bookingdata->option->text;
+    $deletemessage = format_string($bookingdata->option->text);
 
     if ($bookingdata->option->coursestarttime != 0) {
         $deletemessage .= "<br />" .
@@ -197,7 +199,7 @@ if ($form = data_submitted() && has_capability('mod/booking:choose', $context) &
 }
 
 $PAGE->set_title(format_string($booking->settings->name));
-$PAGE->set_heading($booking->settings->name);
+$PAGE->set_heading(format_string($booking->settings->name));
 
 // Submit any new data if there is any.
 if ($download == '' && $form = data_submitted() && has_capability('mod/booking:choose', $context)) {
@@ -210,9 +212,9 @@ if ($download == '' && $form = data_submitted() && has_capability('mod/booking:c
         $bookingdata = new \mod_booking\booking_option($cm->id, $answer, array(), 0, 0, false);
         $bookingdata->apply_tags();
         if ($bookingdata->user_submit_response($USER)) {
-            $contents = get_string('bookingsaved', 'booking');
+            $contents = html_writer::tag('p', get_string('bookingsaved', 'booking'));
             if ($booking->settings->sendmail) {
-                $contents .= "<br />" . get_string('mailconfirmationsent', 'booking') . ".";
+                $contents .= html_writer::tag('p', get_string('mailconfirmationsent', 'booking') . ".");
             }
             $contents .= $OUTPUT->single_button($url,
                     get_string('continue'), 'get');
@@ -220,7 +222,7 @@ if ($download == '' && $form = data_submitted() && has_capability('mod/booking:c
             echo $OUTPUT->footer();
             die();
         } else if (is_numeric($answer)) {
-            $contents = get_string('bookingmeanwhilefull', 'booking') . " " . $bookingdata->option->text;
+            $contents = get_string('bookingmeanwhilefull', 'booking') . " " . format_string($bookingdata->option->text);
             $contents .= $OUTPUT->single_button($url,
                     get_string('continue'), 'get');
             echo $OUTPUT->box($contents, 'box generalbox', 'notice');
@@ -434,7 +436,7 @@ if (!$current and $bookingopen and has_capability('mod/booking:choose', $context
 
         $output = $PAGE->get_renderer('mod_booking');
         $output->print_booking_tabs($urlparams, $whichview, $mybookings->mybookings,
-                $myoptions->myoptions);
+                $myoptions->myoptions, $booking);
 
         $search = '<a class="btn btn-default" href="#" id="showHideSearch">' . get_string('search') . "</a>";
 

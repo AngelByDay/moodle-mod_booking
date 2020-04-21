@@ -87,7 +87,7 @@ $string['limit'] = 'Limit';
 $string['modulename'] = 'Booking';
 $string['modulenameplural'] = 'Bookings';
 $string['mustchooseone'] = 'You must choose an option before saving. Nothing was saved.';
-$string['myoptions'] = 'My options ({$a})';
+$string['myoptions'] = 'Options I manage';
 $string['noguestchoose'] = 'Sorry, guests are not allowed to enter data';
 $string['noresultsviewable'] = 'The results are not currently viewable.';
 $string['nosubscribers'] = 'There are no teachers assigned!';
@@ -243,7 +243,7 @@ $string['wrongdataallfields'] = 'Please, fill out all fields!';
 $string['tagsuccessfullysaved'] = 'Tag was saved.';
 $string['edittag'] = 'Edit';
 
-// all_options
+// mod_booking\all_options
 $string['showdescription'] = 'Show description';
 $string['hidedescription'] = 'Hide description';
 $string['editteacherslink'] = 'Edit teachers';
@@ -259,7 +259,7 @@ $string['conectedbooking'] = 'Connected booking';
 $string['errorpagination'] = 'Please enter a number bigger than 0';
 $string['notconectedbooking'] = 'Not connected';
 $string['conectedbooking_help'] = 'Booking instance eligible for transferring booked users. You can define from which option within the selected booking instance and how many users you will accept.';
-$string['cancancelbook'] = 'Allow user to cancel or book their booking when it is started?';
+$string['cancancelbook'] = 'Allow user to cancel the booking during the booking period?';
 $string['cancancelbookdays'] = 'Disallow users to cancel their booking n days before start';
 $string['cancancelbookdaysno'] = "Don't limit";
 $string['addtocalendar'] = 'Add to calendar';
@@ -726,8 +726,10 @@ $string['reset'] = 'Reset';
 $string['searchtag'] = 'Search tags';
 $string['showinapi'] = 'Show in API?';
 $string['whichview'] = 'Default view for booking options';
+$string['whichviewerror'] = 'You have to include the default view in: Views to show in the booking options overview';
+$string['showviews'] = 'Views to show on in the booking options overview';
 $string['enablepresence'] = 'Enable presence';
-$string['removeuseronunenrol'] = 'Remove user from booking, when unenrol from course?';
+$string['removeuseronunenrol'] = 'Remove user from booking upon unenrolment from associated course?';
 
 // editoptions.php
 $string['addeditbooking'] = 'Edit booking option';
@@ -766,7 +768,7 @@ $string['importcsvtitle'] = 'Import CSV';
 $string['importfinished'] = 'Importing finished!';
 $string['noteacherfound'] = 'The user specified as teacher on line {$a} does not exist on the platform.';
 $string['nouserfound'] = 'No user found: ';
-$string['import_failed'] = 'The import failed du to following reason: ';
+$string['import_failed'] = 'The import failed due to following reason: ';
 $string['import_partial'] = 'The import was only partially completed. There were problems with following lines and they were not imported: ';
 $string['importinfo'] = 'Import info: You can use the following columns in the csv upload (Explanation in parenthesis)';
 
@@ -973,7 +975,7 @@ $string['userssucesfullygetnewpresencestatus'] = 'Presence status for selected u
 // Send message
 $string['activitycompletionsuccess'] = 'All selected users have been marked for activity completion';
 $string['booking:communicate'] = 'Can communicate';
-$string['confirmoptioncompletion'] = 'Confirm completion';
+$string['confirmoptioncompletion'] = '(Un)confirm completion status';
 $string['enablecompletion'] = 'At least one of the booked options has to be marked as completed';
 $string['enablecompletiongroup'] = 'Require entries';
 $string['messagesend'] = 'Your message has been sent.';
@@ -1041,7 +1043,7 @@ $string['pdfstudentname'] = "Student Name";
 $string['pdfsignature'] = "Signature";
 $string['pdftodaydate'] = 'Date: ';
 $string['booking:readallinstitutionusers'] = 'Show all users';
-$string['booking:manageoptiontemplates'] = 'Can create templates';
+$string['canmanageoptiontemplates'] = 'Can manage option templates';
 
 // File: settings.php
 $string['icalcfg'] = 'Configuration of the ical attachements';
@@ -1122,6 +1124,6 @@ $string['confirmusers'] = 'Confirm users activity';
 // optiontemplatessettings.php
 $string['optiontemplatessettings'] = 'Booking option templates';
 $string['defaulttemplate'] = 'Default template';
-$string['defaulttemplatedesc'] = 'Default booking option teplate, when creatting new booking option.';
+$string['defaulttemplatedesc'] = 'Default booking option template, when creatting new booking option.';
 $string['dontuse'] = 'Don\'t use template';
 $string['bookingoptionsfromtemplatemenu'] = 'New booking option from template';
